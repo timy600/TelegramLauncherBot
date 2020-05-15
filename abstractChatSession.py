@@ -65,24 +65,12 @@ class AbstractTelegramChatSession(metaclass=ABCMeta):
         self._command_to_handler[command] = (handler, description)
 
 
-class ReversedChatSession(AbstractTelegramChatSession):
-    def __init__(self, *args, **kwargs):
-        super(ReversedChatSession, self).__init__(*args, **kwargs)
-        self._register_command('start', self.greet)
-    def greet(self, arg):
-        self._send_text('Starting the rocket launch')
-    def handle_text_message(self, msg_text, msg):
-        self._send_text(msg_text[::-1])
-    def default_handle_message(self, msg):
-        self._send_text('Sorry, I can only reverse text')
-
-
 class LaunchFrameXChatSession(AbstractTelegramChatSession):
     def __init__(self, *args, **kwargs):
         super(LaunchFrameXChatSession, self).__init__(*args, **kwargs)
         self._register_command('start', self.greet)
     def greet(self, arg):
-        self._send_text('')
+        self._send_text("Starting the rocket launch")
     def confirm(self, msg_text, msg):
         message = "Did the rocket launch yet?"
         self._send_text(message)
@@ -90,7 +78,7 @@ class LaunchFrameXChatSession(AbstractTelegramChatSession):
         message = f"Found! Take-off = {index}"
         self._send_text(message)
     def default_handle_message(self, msg):
-        self._send_text('Sorry, I can only reverse text')
+        self._send_text('Try /start to spot the launch frame')
 
 
 class TelegramBot():
