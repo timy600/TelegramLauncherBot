@@ -13,21 +13,6 @@ class AbstractTelegramChatSession(metaclass=ABCMeta):
     handler like `handle_photo_message` or `handle_text_message`.
     `_register_command` can be used to register a specific command to be
     recognized by the bot along with a corresponding handler.
-    For example consider the following chat session that just echoes
-    the input in a reverse order
-    class ReversedChatSession(AbstractTelegramChatSession):
-        def __init__(self, *args, **kwargs):
-            super(ReversedChatSession, self).__init__(*args, **kwargs)
-            self._register_command('start', self.greet)
-        def greet(self, arg):
-            self._send_text('!olleH')
-        def handle_text_message(self, msg_text, msg):
-            self._send_text(msg_text[::-1])
-        def default_handle_message(self, msg):
-            self._send_text('Sorry, I can only reverse text')
-    In order to run a telegram bot with a given ChatSession, create
-    an instance of TelegramBot and call the run method.
-    TelegramBot(token).run(ReversedChatSession)
     """
 
     def __init__(self, bot, chat_id):
@@ -80,13 +65,12 @@ class AbstractTelegramChatSession(metaclass=ABCMeta):
         self._command_to_handler[command] = (handler, description)
 
 
-
 class ReversedChatSession(AbstractTelegramChatSession):
     def __init__(self, *args, **kwargs):
         super(ReversedChatSession, self).__init__(*args, **kwargs)
         self._register_command('start', self.greet)
     def greet(self, arg):
-        self._send_text('!olleH')
+        self._send_text('Starting the rocket launch')
     def handle_text_message(self, msg_text, msg):
         self._send_text(msg_text[::-1])
     def default_handle_message(self, msg):
@@ -273,5 +257,5 @@ class UserSession():
         self.session.get(self._set_cookie_url, params=self.launchChatID)
 
 
-NewToken = "1210920754:AAHEO21N0TL7NnuLbI3ZJ_TmXgPKXkF9ViQ"
-TelegramBot(NewToken).run(ReversedChatSession)
+#NewToken = "1210920754:AAHEO21N0TL7NnuLbI3ZJ_TmXgPKXkF9ViQ"
+#TelegramBot(NewToken).run(ReversedChatSession)
