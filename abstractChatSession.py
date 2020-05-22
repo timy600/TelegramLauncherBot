@@ -81,6 +81,22 @@ class LaunchFrameXChatSession(AbstractTelegramChatSession):
         self._send_text('Try /start to spot the launch frame')
 
 
+class OtherChatTest(AbstractTelegramChatSession):
+    def __init__(self, *args, **kwargs):
+        super(LaunchFrameXChatSession, self).__init__(*args, **kwargs)
+        self._register_command('start', self.greet)
+    def greet(self, arg):
+        self._send_text("NEW BOT")
+    def confirm(self, msg_text, msg):
+        message = "DO SOMETHING"
+        self._send_text(message)
+    def found(self, index, msg):
+        message = f"Found! Take-off = {index}"
+        self._send_text(message)
+    def default_handle_message(self, msg):
+        self._send_text('Try /start to spot the launch frame')
+
+
 class TelegramBot():
     """
     Interface for telegram bot API. Each bot maintains many
